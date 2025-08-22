@@ -22,6 +22,17 @@ public class ChatController {
         this.chatModel = chatModel;
     }
 
+    @GetMapping("/ai/role")
+    public String roleGenerate(@RequestParam(value = "message", defaultValue = "获取之江智算平台上的用户角色") String message) {
+        var prompt = new Prompt(new UserMessage(message));
+        String response = ChatClient.create(chatModel)
+            .prompt(prompt)
+            .tools(new ZjicRoleTools())
+            .call()
+            .content();
+        return response;
+    }
+
     @GetMapping("/ai/generate")
     public Map generate(@RequestParam(value = "message", defaultValue = "Tell me a joke") String message) {
         return Map.of("generation", chatModel.call(message));
@@ -52,6 +63,11 @@ public class ChatController {
         .call()
         .content();
         return response;
+    }
+    
+    @GetMapping("/ai/mcpWeather")
+    public void mcpWeather() {
+        
     }
     
 }

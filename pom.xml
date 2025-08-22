@@ -46,6 +46,20 @@
 		</dependency>
 
 		<dependency>
+			<groupId>io.modelcontextprotocol.sdk</groupId>
+			<artifactId>mcp</artifactId>
+			<version>0.11.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.zjic</groupId>
+			<artifactId>control-zjic-sdk</artifactId>
+			<version>1.0.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/libs/control-zjic-sdk-1.0.0.jar</systemPath>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>

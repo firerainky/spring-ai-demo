@@ -2,6 +2,7 @@ package spring.ai.example.spring_ai_demo;
 
 import java.util.Map;
 
+import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
@@ -27,8 +28,30 @@ public class ChatController {
     }
 
     @GetMapping("/ai/generateStream")
-	public Flux<ChatResponse> generateStream(@RequestParam(value = "message", defaultValue = "Tell me a joke") String message) {
+    public Flux<ChatResponse> generateStream(
+            @RequestParam(value = "message", defaultValue = "Tell me a joke") String message) {
         var prompt = new Prompt(new UserMessage(message));
         return chatModel.stream(prompt);
     }
+
+    @GetMapping("/ai/weather")
+    public String getWeather(@RequestParam(value = "param", defaultValue = "Beijing") String param) {
+        String response = ChatClient.create(chatModel)
+                .prompt("What day is tomorrow? ")
+                // .tools(new qqDateTimeTools())
+                .call()
+                .content();
+        return response;
+    }
+
+    @GetMapping("/ai/setAlarm")
+    public String setAlarm() {
+        String response = ChatClient.create(chatModel)
+        .prompt("Can you set an alarm 10 minutes from now?")
+        .tools(new DateTimeTools())
+        .call()
+        .content();
+        return response;
+    }
+    
 }
